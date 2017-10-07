@@ -6,14 +6,14 @@ gulp.task('test', function() {
     return gulp.src('./test/**/*.js').pipe(mocha({require:'test/setup.js', compilers: ['js:babel-register']}));
 })
 
-gulp.task('js', ['test'], function() {
+gulp.task('js', function() {
     return gulp.src('src/index.js')
 	.pipe(babel())
 	.pipe(gulp.dest('build'));
 })
 
 
-gulp.task('default',['js'], function() {
+gulp.task('default',['test','js'], function() {
     
 
     const w = gulp.watch(['src/**/*.js','test/**/*.js'], ['js','cp']);
