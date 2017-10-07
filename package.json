@@ -1,0 +1,29 @@
+{
+  "name": "ui-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+    "scripts": {
+	"prepare" : "gulp js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "react": "^16.0.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-react": "^6.24.1",
+    "chai": "^4.1.2",
+    "enzyme": "^3.1.0",
+    "enzyme-adapter-react-16": "^1.0.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-mocha": "^4.3.1",
+    "jsdom": "^11.3.0",
+    "react-dom": "^16.0.0",
+    "react-test-renderer": "^16.0.0"
+  }
+}
