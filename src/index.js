@@ -84,7 +84,7 @@ function Card({id,image,abilities,count,removehandler,addhandler,children}) {
 	    {(_ => {
 		if(abilities)
 		    return abilities.map( text => <p style={{fontSize:"10px"}}>{text}</p>)
-		else if(children)
+		if(children)
 		    return children
 	    })()}
 	    </div>
