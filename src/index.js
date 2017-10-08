@@ -91,13 +91,13 @@ function Card({id,image,abilities,count,removehandler,addhandler,children}) {
 	    <div className="mdl-card__actions">
 	    {( _ => {
 		if(removehandler)
-		    return ( <button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" data-id={id} onClick={removehandler}>
+		    return ( <button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} onClick={removehandler}>
 			     <i className="material-icons">remove</i>
 			     </button>)
 	    })()}
 	    {( _ => {
 		if(addhandler)
-		    return (<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored" data-id={id} onClick={addhandler}>
+		    return (<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} onClick={addhandler}>
 			    <i className="material-icons">add</i>
 			    </button>)
 	    })()}

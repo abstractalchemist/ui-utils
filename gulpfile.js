@@ -16,7 +16,7 @@ gulp.task('js', function() {
 gulp.task('default',['test','js'], function() {
     
 
-    const w = gulp.watch(['src/**/*.js','test/**/*.js'], ['js','cp']);
+    const w = gulp.watch(['src/**/*.js','test/**/*.js'], ['test','js']);
     w.on('error', function(err) {
 	console.log(err);
     })
