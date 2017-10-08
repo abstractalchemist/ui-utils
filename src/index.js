@@ -83,7 +83,7 @@ function Card({id,image,abilities,count,removehandler,addhandler,children}) {
 	    <div className="mdl-card__supporting-text">
 	    {(_ => {
 		if(abilities)
-		    return abilities.map( text => <p style={{fontSize:"10px"}}>{text}</p>)
+		    return abilities.map( text => <p style={{fontSize:"10px",lineHeight:"12px"}}>{text}</p>)
 		if(children)
 		    return children
 	    })()}
