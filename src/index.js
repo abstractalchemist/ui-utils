@@ -74,7 +74,10 @@ function Card({id,image,abilities,count,removehandler,addhandler,children}) {
 	    <span className="mdl-badge mdl-badge--overlap" data-badge={count}></span>
 	    <div className="mdl-card__media">
 
-	    <img src={image} style={{width:"100%"}} alt="NO IMAGE"></img>
+	    {( _ => {
+		if(image && image.trim().length > 0)
+		    return (<img src={image} style={{width:"100%"}} alt="NO IMAGE"></img>)
+	    })()}
 
 	    </div>
 	    <div className="mdl-card__supporting-text">
