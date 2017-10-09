@@ -71,7 +71,9 @@ function Card({id,image,abilities,count,removehandler,addhandler,menuOpts,menuHa
     return (<div className="mdl-card" style={{width:"100%",overflow:"unset"}}>
 	    <div className="mdl-card__title">
 	    </div>
-	    <span className="mdl-badge mdl-badge--overlap" data-badge={count}></span>
+	    <span className="mdl-chip">
+	    <span className="mdl-chip__text">{count}</span>
+	    </span>
 	    <div className="mdl-card__media">
 
 	    {( _ => {
