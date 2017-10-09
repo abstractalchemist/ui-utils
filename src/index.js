@@ -67,8 +67,8 @@ function Menu({menu_id,items,clickhandler}) {
 	    </div>)
 }
 
-function Card({id,image,abilities,count,removehandler,addhandler,children}) {
-    return (<div className="mdl-card" style={{width:"100%"}}>
+function Card({id,image,abilities,count,removehandler,addhandler,menuOpts,menuHandler,children}) {
+    return (<div className="mdl-card" style={{width:"100%",overflow:"unset"}}>
 	    <div className="mdl-card__title">
 	    </div>
 	    <span className="mdl-badge mdl-badge--overlap" data-badge={count}></span>
@@ -81,12 +81,7 @@ function Card({id,image,abilities,count,removehandler,addhandler,children}) {
 
 	    </div>
 	    <div className="mdl-card__supporting-text">
-	    {(_ => {
-		if(abilities)
-		    return abilities.map( text => <p style={{fontSize:"10px",lineHeight:"12px"}}>{text}</p>)
-		if(children)
-		    return children
-	    })()}
+	    {children}
 	    </div>
 	    <div className="mdl-card__actions">
 	    {( _ => {
@@ -100,6 +95,14 @@ function Card({id,image,abilities,count,removehandler,addhandler,children}) {
 		    return (<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} onClick={addhandler}>
 			    <i className="material-icons">add</i>
 			    </button>)
+	    })()}
+	    {( _ => {
+		if(menuOpts) {
+		    
+		    return (<div style={{display:"inline-block"}}>
+			    <Menu menu_id={id + "_menu"} items={menuOpts} clickhandler={menuHandler} />
+			    </div>)
+		}
 	    })()}
 	    </div>
 	    </div>)
