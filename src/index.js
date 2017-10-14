@@ -57,7 +57,7 @@ function Menu({menu_id,items,clickhandler}) {
 	    <button id={menu_id} className="mdl-button mdl-js-button mdl-button__icon">
 	    <i className="material-icons">more_vert</i>
 	    </button>
-	    <ul htmlFor={menu_id} className="mdl-menu mdl-js-menu">
+	    <ul htmlFor={menu_id} className="mdl-menu mdl-js-menu mdl-menu--top-left">
 	    {( _ => {
 		if(items)
 		    return items.map(({ label, id }) => <li onClick={clickhandler} className="mdl-menu__item" data-id={id}>{label}</li>);
@@ -67,7 +67,7 @@ function Menu({menu_id,items,clickhandler}) {
 	    </div>)
 }
 
-function Card({id,image,abilities,count,removehandler,addhandler,menuOpts,menuHandler,children}) {
+function Card({id,number,image,abilities,count,removehandler,addhandler,addhandler2,removehandler2,menuOpts,menuHandler,children}) {
     return (<div className="mdl-card" style={{width:"100%",overflow:"unset"}}>
 	    <div className="mdl-card__title">
 	    </div>
@@ -88,16 +88,33 @@ function Card({id,image,abilities,count,removehandler,addhandler,menuOpts,menuHa
 	    <div className="mdl-card__actions">
 	    {( _ => {
 		if(removehandler)
-		    return ( <button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} onClick={removehandler}>
+		    return ( <button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={removehandler}>
 			     <i className="material-icons">remove</i>
 			     </button>)
 	    })()}
 	    {( _ => {
 		if(addhandler)
-		    return (<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} onClick={addhandler}>
+		    return (<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={addhandler}>
 			    <i className="material-icons">add</i>
 			    </button>)
 	    })()}
+	    {( _ => {
+		if(addhandler2) {
+		    return (<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={addhandler2}>
+			    <i className="material-icons">add to queue</i>
+			    </button>)
+		}
+	    })()
+	    }
+	    {( _ => {
+		if(removehandler2) {
+		    return (<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={removehandler2}>
+			    <i className="material-icons">remove frome queue</i>
+			    </button>)
+		}
+	    })()
+	    }
+	    
 	    {( _ => {
 		if(menuOpts) {
 		    
