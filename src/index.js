@@ -12,7 +12,6 @@ function Nav({title,links,tabs}) {
 	}
 
     }
-    
     return (<header className="mdl-layout__header">
 	    <div className="mdl-layout-icon"></div>
 	    
@@ -28,7 +27,9 @@ function Nav({title,links,tabs}) {
 	    </nav>
 
 	    </div>
+
 	    {generateTabHeaders()}
+
 	    </header>);
 }
 
@@ -87,30 +88,63 @@ function Card({id,number,image,abilities,count,removehandler,addhandler,addhandl
 	    </div>
 	    <div className="mdl-card__actions">
 	    {( _ => {
-		if(removehandler)
-		    return ( <button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={removehandler}>
+		if(removehandler) {
+		    let handler = removehandler;
+		    let tooltip = ""
+		    if(handler.tooltip && handler.handler) {
+			removehandler = handler.handler
+			tooltip = handler.tooltip
+		    }
+		    return [ <button id={`remove-button-${id}`} className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={removehandler}>
 			     <i className="material-icons">remove</i>
-			     </button>)
+			     </button>,
+			     <div className="mdl-tooltip" id={`remove-button-${id}`}>{tooltip}</div>]
+		}
 	    })()}
 	    {( _ => {
-		if(addhandler)
-		    return (<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={addhandler}>
+		if(addhandler) {
+		    let handler = addhandler;
+		    let tooltip = ""
+		    if(handler.tooltip && handler.handler) {
+			addhandler = handler.handler;
+			tooltip = handler.tooltip
+		    }
+		    
+		    return [<button id={`add-button-${id}`} className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={addhandler}>
 			    <i className="material-icons">add</i>
-			    </button>)
+			    </button>,
+			    <div className="mdl-tooltip" htmlFor={`add-button-${id}`}>{tooltip}</div>]
+		}
 	    })()}
 	    {( _ => {
 		if(addhandler2) {
-		    return (<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={addhandler2}>
+		    let handler = addhandler2;
+		    let tooltip = ""
+		    if(handler.tooltip && handler.handler) {
+			addhandler2 = handler.handler;
+			tooltip = handler.tooltip
+		    }
+
+		    return [<button id={`add-button-2-${id}`} className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={addhandler2}>
 			    <i className="material-icons">add to queue</i>
-			    </button>)
+			    </button>,
+			    <div className="mdl-tooltip" htmlFor={`add-button-2-${id}`}>{tooltip}</div>]
 		}
 	    })()
 	    }
 	    {( _ => {
 		if(removehandler2) {
-		    return (<button className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={removehandler2}>
+		    let handler = removehandler2;
+		    let tooltip = ""
+		    if(handler.tooltip && handler.handler) {
+			removehandler2 = handler.handler;
+			tooltip = handler.tooltip
+		    }
+		    
+		    return [<button id={`remove-handler-2-${id}`} className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={removehandler2}>
 			    <i className="material-icons">remove frome queue</i>
-			    </button>)
+			    </button>,
+			    <div className="mdl-tooltip" htmlFor={`remove-handler-2-${id}`}>{tooltip}</div>]
 		}
 	    })()
 	    }
