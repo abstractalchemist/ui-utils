@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Nav({title,links,tabs}) {
+function Nav({title,links,tabs,children}) {
 
     const generateTabHeaders = _ => {
 	if(tabs) {
@@ -16,8 +16,10 @@ function Nav({title,links,tabs}) {
 	    <div className="mdl-layout-icon"></div>
 	    
 	    <div className="mdl-layout__header-row">
+
 	    <span className="mdl-layout__title">{title}</span>
 	    <div className="mdl-layout-spacer"></div>
+	    {children}
 	    <nav className="mdl-navigation">
 	    {( _ => {
 		if(links) {
