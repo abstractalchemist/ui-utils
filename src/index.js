@@ -71,7 +71,7 @@ function Menu({menu_id,items,clickhandler}) {
 	    </div>)
 }
 
-function Card({id,number,image,abilities,count,removehandler,addhandler,addhandler2,removehandler2,menuOpts,menuHandler,children}) {
+function Card({id,number,image,abilities,count,removehandler,addhandler,addhandler2,removehandler2,menuOpts,menuHandler,children,actions}) {
     return (<div className="mdl-card" style={{width:"100%",overflow:"unset"}}>
 	    <div className="mdl-card__title">
 	    </div>
@@ -163,6 +163,7 @@ function Card({id,number,image,abilities,count,removehandler,addhandler,addhandl
 			    </div>)
 		}
 	    })()}
+	    {actions}
 	    </div>
 	    </div>)
 
