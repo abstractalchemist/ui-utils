@@ -1,4 +1,5 @@
 import React from 'react';
+import LazyLoad from 'react-lazy-load'
 
 function Nav({title,links,tabs,children}) {
 
@@ -81,7 +82,10 @@ function Card({id,number,image,abilities,count,removehandler,addhandler,addhandl
 
 	    {( _ => {
 		if(image && image.trim().length > 0)
-		    return (<img src={image} style={{width:"100%"}} alt="NO IMAGE"></img>)
+		    
+		    return (<LazyLoad>
+			    <img src={image} style={{width:"100%"}} alt="NO IMAGE"></img>
+			    </LazyLoad>)
 	    })()}
 
 	    </div>
