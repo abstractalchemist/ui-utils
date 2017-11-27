@@ -72,6 +72,43 @@ function Menu({menu_id,items,clickhandler}) {
 }
 
 function Card({id,number,image,abilities,count,removehandler,addhandler,addhandler2,removehandler2,menuOpts,menuHandler,children,actions}) {
+    let large = true;
+    if(typeof screen !== 'undefined') {
+	large = screen.width >= 768;
+    }
+
+    const parsehandler = function(handler) {
+	if(typeof handler === 'object') {
+	    return [handler.tooltip,handler.handler]
+	}
+	return ["",handler]
+    }
+
+    const action_button_creator = (button_id, icon, handler_obj, dialog_id) => {
+	if(handler_obj) {
+	    let [tooltip, handler] = parsehandler(handler_obj)
+	    if(dialog_id) {
+		let delegate = handler
+		handler = evt => {
+		    document.querySelector(`#${dialog_id}`).close()
+		    delegate(evt)
+		}
+	    }
+	    let activation = [<button id={button_id} className="mdl-button mdl-js-button mdl-button--icon" data-id={id} data-number={number} onClick={handler}>
+			      <i className="material-icons">{icon}</i> 
+			      </button>,
+			      <div className="mdl-tooltip" id={`remove-button-${id}`}>{tooltip}</div>]
+			      
+	    if(typeof icon === 'object')
+		activation = (<button id={button_id} className="mdl-button mdl-js-button" data-id={id} data-number={number} onClick={handler}>
+			      {tooltip}
+			      </button>)
+		
+	    return activation
+	}
+
+    }
+    
     return (<div className="mdl-card" style={{width:"100%",overflow:"unset"}}>
 	    <div className="mdl-card__title">
 	    </div>
@@ -88,69 +125,62 @@ function Card({id,number,image,abilities,count,removehandler,addhandler,addhandl
 			    </LazyLoad>)
 	    })()}
 
-	    </div>
+ 	    </div>
 	    <div className="mdl-card__supporting-text">
 	    {children}
 	    </div>
 	    <div className="mdl-card__actions">
-	    {( _ => {
-		if(removehandler) {
-		    let handler = removehandler;
-		    let tooltip = ""
-		    if(handler.tooltip && handler.handler) {
-			removehandler = handler.handler
-			tooltip = handler.tooltip
-		    }
-		    return [ <button id={`remove-button-${id}`} className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={removehandler}>
-			     <i className="material-icons">remove</i>
-			     </button>,
-			     <div className="mdl-tooltip" id={`remove-button-${id}`}>{tooltip}</div>]
-		}
-	    })()}
-	    {( _ => {
-		if(addhandler) {
-		    let handler = addhandler;
-		    let tooltip = ""
-		    if(handler.tooltip && handler.handler) {
-			addhandler = handler.handler;
-			tooltip = handler.tooltip
-		    }
+	    {(_ => {
+		if(!large) {
 		    
-		    return [<button id={`add-button-${id}`} className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={addhandler}>
-			    <i className="material-icons">add</i>
+		    return [<button className="mdl-button mdl-js-button mdl-button--icon" onClick={
+			evt => {
+			    document.querySelector(`#dialog-opts-${id}`).showModal()
+			}
+		    }>
+			    <i className="material-icons">edit</i>
 			    </button>,
-			    <div className="mdl-tooltip" htmlFor={`add-button-${id}`}>{tooltip}</div>]
+			    <dialog className="mdl-dialog" id={`dialog-opts-${id}`}>
+ 			    <div className="mdl-dialog__actions" >
+			    {( _ => {
+				let opts = []
+				opts = opts.concat(action_button_creator(`remove-button-${id}`, {desc: "remove"}, removehandler, `dialog-opts-${id}`))
+				opts = opts.concat(action_button_creator(`add-button-${id}`, {desc: 'add'}, addhandler, `dialog-opts-${id}`))
+				opts = opts.concat(action_button_creator(`add-button-2-${id}`, {desc: 'add to queue'}, addhandler2, `dialog-opts-${id}`))
+				opts = opts.concat(action_button_creator(`remove-handler-2-${id}`, {desc:'remove from queue'}, removehandler2, `dialog-opts-${id}`))
+				return opts
+			    })()}
+			    <button className="mdl-button mdl-js-button mdl-button--icon" onClick={
+				evt => {
+				    document.querySelector(`#dialog-opts-${id}`).close()
+				}
+			    }>
+			    <i className="material-icons">close</i>
+			    </button>
+			    </div>
+			    </dialog>]
+		}
+			   
+	    })()}
+	    {( _ => {
+		if(large) {
+		    return action_button_creator(`remove-button-${id}`, "remove", removehandler);
 		}
 	    })()}
 	    {( _ => {
-		if(addhandler2) {
-		    let handler = addhandler2;
-		    let tooltip = ""
-		    if(handler.tooltip && handler.handler) {
-			addhandler2 = handler.handler;
-			tooltip = handler.tooltip
-		    }
-
-		    return [<button id={`add-button-2-${id}`} className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={addhandler2}>
-			    <i className="material-icons">add to queue</i>
-			    </button>,
-			    <div className="mdl-tooltip" htmlFor={`add-button-2-${id}`}>{tooltip}</div>]
+		if(large) {
+		    return action_button_creator(`add-button-${id}`, 'add', addhandler)
+		}
+	    })()}
+	    {( _ => {
+		if(large) {
+		    return action_button_creator(`add-button-2-${id}`, 'add to queue', addhandler2)
 		}
 	    })()
 	    }
 	    {( _ => {
-		if(removehandler2) {
-		    let handler = removehandler2;
-		    let tooltip = ""
-		    if(handler.tooltip && handler.handler) {
-			removehandler2 = handler.handler;
-			tooltip = handler.tooltip
-		    }
-		    
-		    return [<button id={`remove-handler-2-${id}`} className="mdl-button mdl-js-button mdl-button--fab mdl-button--colored mdl-button--mini-fab" data-id={id} data-number={number} onClick={removehandler2}>
-			    <i className="material-icons">remove frome queue</i>
-			    </button>,
-			    <div className="mdl-tooltip" htmlFor={`remove-handler-2-${id}`}>{tooltip}</div>]
+		if(large) {
+		    return action_button_creator(`remove-handler-2-${id}`, 'remove from queue', removehandler2)
 		}
 	    })()
 	    }
