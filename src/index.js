@@ -71,7 +71,7 @@ function Menu({menu_id,items,clickhandler}) {
 	    </div>)
 }
 
-function Card({id,number,image,abilities,count,removehandler,addhandler,addhandler2,removehandler2,menuOpts,menuHandler,children,actions}) {
+function Card({id,name,number,image,abilities,count,removehandler,addhandler,addhandler2,removehandler2,menuOpts,menuHandler,children,actions,show_title}) {
     let large = true;
     if(typeof screen !== 'undefined') {
 	large = screen.width >= 768;
@@ -113,7 +113,13 @@ function Card({id,number,image,abilities,count,removehandler,addhandler,addhandl
 	    <div className="mdl-card__title">
 	    </div>
 	    <span className="mdl-chip">
-	    <span className="mdl-chip__text">{count}</span>
+	    <span className="mdl-chip__text">{
+		(_ => {
+		    if(show_title)
+			return name
+		    return count
+		})()
+	    }</span>
 	    </span>
 	    <div className="mdl-card__media">
 
