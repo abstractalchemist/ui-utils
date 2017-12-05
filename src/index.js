@@ -79,14 +79,14 @@ function Card({id,name,number,image,abilities,count,removehandler,addhandler,add
 
     const parsehandler = function(handler) {
 	if(typeof handler === 'object') {
-	    return [handler.tooltip,handler.handler]
+	    return [handler.tooltip,handler.handler,handler.disabled]
 	}
 	return ["",handler]
     }
 
     const action_button_creator = (button_id, icon, handler_obj, dialog_id) => {
 	if(handler_obj) {
-	    let [tooltip, handler] = parsehandler(handler_obj)
+	    let [tooltip, handler, disabled] = parsehandler(handler_obj)
 	    if(dialog_id) {
 		let delegate = handler
 		handler = evt => {
@@ -94,13 +94,14 @@ function Card({id,name,number,image,abilities,count,removehandler,addhandler,add
 		    delegate(evt)
 		}
 	    }
-	    let activation = [<button id={button_id} className="mdl-button mdl-js-button mdl-button--icon" data-id={id} data-number={number} onClick={handler}>
+	    let button_status = disabled ? { disabled:"true" } : { enabled: "true" }
+	    let activation = [<button id={button_id} className="mdl-button mdl-js-button mdl-button--icon" data-id={id} data-number={number} onClick={handler} {...button_status}>
 			      <i className="material-icons">{icon}</i> 
 			      </button>,
 			      <div className="mdl-tooltip" id={`remove-button-${id}`}>{tooltip}</div>]
 			      
 	    if(typeof icon === 'object')
-		activation = (<button id={button_id} className="mdl-button mdl-js-button" data-id={id} data-number={number} onClick={handler}>
+		activation = (<button id={button_id} className="mdl-button mdl-js-button" data-id={id} data-number={number} onClick={handler} {...button_status}>
 			      {tooltip}
 			      </button>)
 		
@@ -150,10 +151,14 @@ function Card({id,name,number,image,abilities,count,removehandler,addhandler,add
  			    <div className="mdl-dialog__actions" >
 			    {( _ => {
 				let opts = []
-				opts = opts.concat(action_button_creator(`remove-button-${id}`, {desc: "remove"}, removehandler, `dialog-opts-${id}`))
-				opts = opts.concat(action_button_creator(`add-button-${id}`, {desc: 'add'}, addhandler, `dialog-opts-${id}`))
-				opts = opts.concat(action_button_creator(`add-button-2-${id}`, {desc: 'add to queue'}, addhandler2, `dialog-opts-${id}`))
-				opts = opts.concat(action_button_creator(`remove-handler-2-${id}`, {desc:'remove from queue'}, removehandler2, `dialog-opts-${id}`))
+				if(removehandler)
+				    opts = opts.concat(action_button_creator(`remove-button-${id}`, {desc: "remove"}, removehandler, `dialog-opts-${id}`))
+				if(addhandler)
+				    opts = opts.concat(action_button_creator(`add-button-${id}`, {desc: 'add'}, addhandler, `dialog-opts-${id}`))
+				if(addhandler2)
+				    opts = opts.concat(action_button_creator(`add-button-2-${id}`, {desc: 'add to queue'}, addhandler2, `dialog-opts-${id}`))
+				if(removehandler2)
+				    opts = opts.concat(action_button_creator(`remove-handler-2-${id}`, {desc:'remove from queue'}, removehandler2, `dialog-opts-${id}`))
 				return opts
 			    })()}
 			    <button className="mdl-button mdl-js-button mdl-button--icon" onClick={
